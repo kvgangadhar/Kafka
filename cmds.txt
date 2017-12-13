@@ -1,0 +1,94 @@
+Day1
+
+ kafka-run-class.bat kafka.admin.TopicCommand --delete --topic satishkumar --zookeeper localhost:2181
+
+kafka-topics.bat --list --zookeeper localhost:2181
+
+kafka-console-producer.bat --broker-list localhost:9092 --topic my-big-topic
+
+kafka-console-consumer.bat --zookeeper localhost:2181 --topic my-big-topic
+
+kafka-console-consumer.bat --zookeeper localhost:2181 --topic my-big-topic5 --from-beginning
+
+kafka-topics.bat --describe --zookeeper localhost:2181 --topic my-topic1
+
+kafka-topics.bat --create --zookeeper localhost:2181 --replication-factor 3 --partitions 3 --topic SK
+
+internal node replicas-ISR
+
+.\bin\windows\kafka-server-start.bat .\config\server.properties
+
+.\bin\windows\kafka-server-start.bat .\config\server1.properties
+
+.\bin\windows\kafka-server-start.bat .\config\server2.properties
+
+kafka-topics.bat --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic KAFKA
+
+kafka-console-producer.bat --broker-list localhost:9092 --topic KAFKA
+
+logical area where msgs are stored -partition
+===============================
+Day2
+
+producers,consumers,consumer groups
+
+inside broker lies the topic
+
+ack - scenario-- when 
+
+ack happens at batch level 
+
+kafka-producer-perf-test.bat --topic KAFKA1 --num-record 50 --record-size 1 --throughput 10 --producer-props bootstrap.servers=localhost:9092 key.serializer=org.apache.kafka.common.serialization.StringSerializer value.serializer=org.apache.kafka.common.serialization.StringDeserializer
+
+1 topic can have multiple partition
+
+kafka-topics.bat --zookeeper localhost:2181 --alter --topic KAFKA1 --partitions 4
+
+both assign and subsscribe cant run parallely - as it using 1 thread
+
+single consumer API
+poll is single poll API
+producer 
+micro batching 
+producer record has valid partitioning
+assign and subscribe method
+ack methods
+error occure retry occurs 
+consumer coordinator - zookeeper
+poll(100)-consumer consumes the data within this period
+
+
+========================================================================
+Day3
+consumer groups
+partition details are stored in metadata 
+default partition
+1.key mod hash map
+2.s
+
+producer accumulator
+micro batching 
+when the batch size is filled the 
+based on linger ms the topics will be shared 
+no seq order in processing the topics
+consumer 
+fetcher - 
+poll method is single thread operation
+scaleout consumers
+rebalancing is done by group coordinator
+partition allocation is done by grp coordinator 
+last commit offset - duplication is possible  
+periodic commit 
+
+create object
+update partition
+
+kafka-topics.bat --create --zookeeper localhost:2181 --replication-factor 1 --partitions 3 --topic "my-big-topic6"
+
+kafka-topics.bat --zookeeper localhost:2181 --alter --topic my-big-topic1 --partitions 4
+
+kafka-producer-perf-test.bat --topic my-big-topic6 --num-record 50 --record-size 1 --throughput 10 --producer-props bootstrap.servers=localhost:9092 key.serializer=org.apache.kafka.common.serialization.StringSerializer value.serializer=org.apache.kafka.common.serialization.StringDeserializer
+
+
+producer factory can be created by kafka template
+consumer factory is created by factory container
